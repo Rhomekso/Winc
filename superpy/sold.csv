@@ -1,0 +1,10 @@
+,,Sold,,
+id,product name,bougt_id,sell_date,sell_price
+1,orange,6,2023-09-05,"4,5"
+2,banana,8,2023-09-06,"5,5"
+3,apple,9,2023-09-07,"6,5"
+4,cherry,4,2023-09-08,"7,5"
+5,lemon,5,2023-09-09,"8,5"
+6,strawberry,2,2023-09-10,"9,5"
+7,papaya,3,2023-09-11,"10,5"
+8,watermelon,1,2023-09-12,"11,5"
