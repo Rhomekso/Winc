@@ -2,7 +2,9 @@ import argparse
 import csv
 import os
 import sys
+import shutil
 import matplotlib as plt
+from tempfile import NamedTemporaryFile
 from rich.console import Console
 from rich.traceback import install
 from rich import print
@@ -88,24 +90,49 @@ class Inventory:
 
 
 # this is selling a product
-    def sell_product(self, product_name, price):
+    def sell_product(self, product_name, quantity):
+        filename = "inventory.csv"
+        tempfile = NamedTemporaryFile(mode="w", delete=False)
         fieldnames = ['id', 'product name','buy date','sell price','expiration date','quantity']
-        with open(self.allinfo, "r+", newline="") as sell_prod:
-            writer = str(csv.DictWriter(sell_prod, fieldnames=fieldnames, delimiter=","))
-            if os.path.exists("inventory.csv") == True:
+        with open(self.allinfo, "r+", newline="") as sell_prod, tempfile:
+            writer = csv.DictWriter(tempfile, fieldnames=fieldnames, delimiter=",")
+            reader = csv.DictReader(sell_prod, fieldnames=fieldnames, delimiter=",")
+            path = os.path.exists("inventory.csv")
+            if path == True:
                 prod_found = False
-                for line in writer:
-                    products = line.split(",")
-                    print(products)
-                    if product_name == products[1]:
+                for line in reader:
+                    if product_name == line["product name"]:
+                        update_stock = {}
                         prod_found = True
-                        print(product_name)
-                        products[1].remove(sell_prod)
-                        break 
+                        product_quantity = line["quantity"]
+                        new_stock = int(product_quantity) - quantity
+                        print(f"Updating stock:\nproduct: {line['product name']}\nquantity: {new_stock}")
+                        row = {"id": line["id"], "product name": line["product name"], "buy date": line["buy date"], "sell price": line["sell price"], "expiration date": line["expiration date"], "quantity": new_stock}
+                        writer.writerow(row)
+                        print(row)
+                        shutil.move(tempfile.name, filename)
+                        break
             if prod_found == True:
-                return f"{product_name} is in stock with with price:{price}"
+                        return f"{product_name} is in stock..."
             else:
-                print("ERROR: Product not in stock")
+                print(f"ERROR: {product_name} not in stock...")
+
+
+# TODO!!!!!
+    def get_revenue(self, product, date):
+        fieldnames = ["id,product name,buy date,sell price,expiration date,quantity"]
+        if os.path.exists("inventory.csv") == True:
+            with open(self.allinfo, "r", newline="") as sell_prod:
+                total_revenue = 0
+                for sell_prod in writer:
+                    writer = csv.DictReader(sell_prod, fieldnames=fieldnames, delimiter=",")
+                    products = sell_prod.split(",")
+                    if date == products["buy date"]:
+                        total_revenue = total_revenue + products["price"]
+                        
+                        return total_revenue
+
+
 
 
         # accesing the inventory.csv and putting(buying) a product and putting it in an new csv file 

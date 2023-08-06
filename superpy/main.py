@@ -55,7 +55,8 @@ subparser_buy.add_argument("--expiration", help="expiration date", type=str, req
 # CLI for the sell parser
 subparser_sell = subparsers.add_parser("sell", help="Selling a product")
 subparser_sell.add_argument("--product", help="wich product", type=str, required=True)
-subparser_sell.add_argument("--price", help="product price", type=float, required=True)
+# subparser_sell.add_argument("--price", help="product price", type=float, required=True)
+subparser_sell.add_argument("--quantity", help="desired quantity", type=int, required=True)
 
 args = parser.parse_args()
 
@@ -98,9 +99,10 @@ if __name__ == "__main__":
         prod_buy = inventory.buy_product(prod_name, price, exp_date, quant, today)
 
     if args.command == "sell":
+        prod_quantity = args.quantity
         prod_name = args.product
-        price = args.price 
-        prod_sell = inventory.sell_product(prod_name, price)
+        # price = args.price 
+        prod_sell = inventory.sell_product(prod_name, prod_quantity)
 
     if args.inven:
         inventory_stock = inventory.inventory_info()
