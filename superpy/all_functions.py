@@ -81,12 +81,22 @@ class Inventory:
             if os.path.exists("inventory.csv") == False:
                 writer.writeheader()
                 id = 1
-                writer.writerow({'id': id, 'product name': product_name,'buy date': today, 'sell price': price, 'expiration date': expiration_date, 'quantity': quantity})
+                writer.writerow({'id': id, 
+                                 'product name': product_name,
+                                 'buy date': today, 
+                                 'sell price': price, 
+                                 'expiration date': expiration_date, 
+                                 'quantity': quantity})
             else:
                 final_line = buying_prod.readlines()[-1]
                 last_line = final_line.split(",")
                 id = int(last_line[0]) + 1
-                writer.writerow({'id': id, 'product name': product_name,'buy date': today, 'sell price': price, 'expiration date': expiration_date, 'quantity': quantity})
+                writer.writerow({'id': id, 
+                                 'product name': product_name,
+                                 'buy date': today, 
+                                 'sell price': price, 
+                                 'expiration date': expiration_date, 
+                                 'quantity': quantity})
 
 
 # this is selling a product
@@ -100,22 +110,29 @@ class Inventory:
             path = os.path.exists("inventory.csv")
             if path == True:
                 prod_found = False
-                for line in reader:
-                    if product_name == line["product name"]:
-                        update_stock = {}
+                for lines in reader:
+                    writer.writeheader()
+                    product_quantity = lines["quantity"]
+                    if product_name == lines["product name"]:
                         prod_found = True
-                        product_quantity = line["quantity"]
-                        new_stock = int(product_quantity) - quantity
-                        print(f"Updating stock:\nproduct: {line['product name']}\nquantity: {new_stock}")
-                        row = {"id": line["id"], "product name": line["product name"], "buy date": line["buy date"], "sell price": line["sell price"], "expiration date": line["expiration date"], "quantity": new_stock}
-                        writer.writerow(row)
-                        print(row)
-                        shutil.move(tempfile.name, filename)
+                        if prod_found == True:
+                            new_stock = int(product_quantity) - quantity
+                            print(
+                            f"Updating stock:\nproduct: {lines['product name']}\nquantity: {new_stock}")
+                            row = {"id": lines["id"], 
+                               "product name": lines["product name"], 
+                               "buy date": lines["buy date"], 
+                               "sell price": lines["sell price"], 
+                               "expiration date": lines["expiration date"], 
+                               "quantity": new_stock}
+                            writer.writerow(row)
+                            print(row)
+                    else:
+                        print(f"product: {product_name}, not in stock")
                         break
-            if prod_found == True:
-                        return f"{product_name} is in stock..."
-            else:
-                print(f"ERROR: {product_name} not in stock...")
+        # shutil.move(tempfile.name, filename)
+
+            
 
 
 # TODO!!!!!
