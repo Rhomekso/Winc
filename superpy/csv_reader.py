@@ -21,7 +21,7 @@ class CsvReader:
         self.filename = filename
 
     def create_date_today(self):
-        console.log(log_locals=True)
+        # console.log(log_locals=True)
         if not os.path.exists(self.filename):
             with open(self.filename, "w") as file:
                 new_current_date = date.today()
@@ -40,7 +40,7 @@ class CsvReader:
                     return date_object
 
     def change_forward(self,days):
-        console.log(log_locals=True)
+        # console.log(log_locals=True)
         current_date = CurrentDate(self.create_date_today())
         if os.path.exists(self.filename):
             with open(self.filename, "w") as file:
@@ -50,7 +50,7 @@ class CsvReader:
                 return current_date.time()
 
     def change_rewind(self,days):
-        console.log(log_locals=True)
+        # console.log(log_locals=True)
         current_date = CurrentDate(self.create_date_today())
         if os.path.exists(self.filename):
             with open(self.filename, "w") as file:
