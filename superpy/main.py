@@ -24,11 +24,10 @@ parser = argparse.ArgumentParser(description="Supermarket information tool")
 parser.add_argument("--all_prod", action="store_true", help="shows all products and quantity")
 parser.add_argument("--bought", action="store_true", help="shows all bought products and expiration date")
 parser.add_argument("--sold", action="store_true", help="shows product price and expiration date or if it is expired.")
-# parser.add_argument("-exp_date", type=str, metavar="", help="shows product expiration date")
-# parser.add_argument("-quant", type=int, metavar="", help="shows product quantity")
 parser.add_argument("--inven", action="store_true", help="shows product inventory stock information")
 parser.add_argument("--sales", action="store_true", help="shows product sales information")
-
+parser.add_argument("--revenue", action="store_true", help="shows revenue information")
+parser.add_argument("--reset", action="store_true", help="resets and deletes date file")
 
 
 # Command input
@@ -39,11 +38,11 @@ subparser_date = subparsers.add_parser("today", help="This shows today's date")
 
 # CLI for the date of forward
 subparser_forward = subparsers.add_parser("forward",help="Jumping forward")
-subparser_forward.add_argument("--add", help="add days", type=int, required=True)
+subparser_forward.add_argument("--add", help="add days (DD)", type=int, required=True)
 
 # CLI for the date of rewind
 subparser_rewind = subparsers.add_parser("rewind", help="Hopping back")
-subparser_rewind.add_argument("--sub", help="subtract days", type=int, required=True)
+subparser_rewind.add_argument("--sub", help="subtract days (DD)", type=int, required=True)
 
 # CLI for the buy parser
 subparser_buy = subparsers.add_parser("buy", help="Buying a product")
@@ -55,7 +54,6 @@ subparser_buy.add_argument("--expiration", help="expiration date", type=str, req
 # CLI for the sell parser
 subparser_sell = subparsers.add_parser("sell", help="Selling a product")
 subparser_sell.add_argument("--product", help="wich product", type=str, required=True)
-# subparser_sell.add_argument("--price", help="product price", type=float, required=True)
 subparser_sell.add_argument("--quantity", help="desired quantity", type=int, required=True)
 
 args = parser.parse_args()
@@ -101,7 +99,6 @@ if __name__ == "__main__":
     if args.command == "sell":
         prod_quantity = args.quantity
         prod_name = args.product
-        # price = args.price 
         prod_sell = inventory.sell_product(prod_name, prod_quantity)
 
     if args.inven:
@@ -118,5 +115,11 @@ if __name__ == "__main__":
 
     if args.sold:
         inventory.product_sold()
+
+    if args.revenue:
+        sales.get_revenue()
+
+    if args.reset:
+        csv_reader.reset_date()
 
     

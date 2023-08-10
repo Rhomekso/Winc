@@ -124,10 +124,12 @@ class Inventory:
                             "expiration date": lines["expiration date"],
                             "quantity": new_stock
                         }
+                        # if the new stock reaches 0 stop iterating over product and continue
                         if  new_stock == 0:
                             print(f"{product_name} out of stock, quantity: {new_stock}")
                             continue
                         writer.writerow(row)
+                        # this makes sure the file stays intact and moves to the last if statement
                     else:
                         row = {
                             "id": lines["id"],
@@ -138,33 +140,38 @@ class Inventory:
                             "quantity": lines["quantity"]
                         }
                         writer.writerow(lines)
+                        # when product is not in file send error message
                 if prod_found == False:
-                    print(f"product: {product_name}, not in stock")
+                    print(f"ERROR product: {product_name}, not in stock")
             shutil.move(tempfile.name, filename)
 
-# TODO!!!!!
-    def get_revenue(self, product, date):
-        fieldnames = ["id,product name,buy date,sell price,expiration date,quantity"]
-        if os.path.exists("inventory.csv") == True:
-            with open(self.allinfo, "r", newline="") as sell_prod:
-                total_revenue = 0
-                for sell_prod in reader:
-                    reader = csv.DictReader(sell_prod, fieldnames=fieldnames, delimiter=",")
-                    products = sell_prod.split(",")
-                    if date == products["buy date"]:
-                        total_revenue = total_revenue + products["price"]
-                        
-                        return total_revenue
+# TODO!!!!! # report revenue
+    def get_revenue(self):
+        csv_reader = CsvReader("info_today.csv")
+        date_today = str(csv_reader.read_today())
+        total_sum = 0
+        rev_made = True
+        with open(self.allinfo, "r") as revenue:
+            reader = csv.DictReader(revenue)
+            for row in reader:
+                sell_date = row["sell date"]
+                if date_today == sell_date:
+                    rev_made = True
+                    price = float(row["sell price"])
+                    total_sum += price
+            if rev_made == True:
+                    print(f"This is today's date: {date_today}")
+                    print(f"Total revenue: {total_sum}")
+                    
+            else:
+                rev_made = False
+                if rev_made == False:
+                    print(f"There is no revenue made as of: {date_today}")
+
+                return total_sum
 
 
-
-
-        # accesing the inventory.csv and putting(buying) a product and putting it in an new csv file 
-        # function must remove the product and put in the new file.
-        # product should be the instance that is accesed by the argparse maybe an empty string ""
-
-        # sell_product
-        # report revenue
+        
 
 # class Statisticks:
 
@@ -172,9 +179,6 @@ class Inventory:
 
 # functions needed
 
-# buy product with dictionary key, value items
-# sell the product with dictionary key, value items
-# generate an inventory report
 # generate revenue report
 # generate profit report
 # generate export report

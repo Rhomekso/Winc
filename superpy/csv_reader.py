@@ -20,6 +20,26 @@ class CsvReader:
     def __init__(self, filename):
         self.filename = filename
 
+# this "resets" the day/ deletes the info_today.csv file if it exists
+    def reset_date(self):
+        if os.path.exists(self.filename):
+            os.remove(self.filename)
+            print(f"Cautian!! File: {self.filename} has been removed.")
+        else:
+            print(f"The file you are looking for does not exixts: {self.filename}")
+
+
+# This reads the info_today.csv file if it exists
+    def read_today(self):
+        if os.path.exists(self.filename):
+            with open(self.filename, "r") as today:
+                for row in today:
+                    print(row)
+
+                return row
+        if not os.path.exists(self.filename):
+            print("ERROR: File not available")
+
     def create_date_today(self):
         # console.log(log_locals=True)
         if not os.path.exists(self.filename):
@@ -35,7 +55,7 @@ class CsvReader:
                 reader = csv.reader(changed_file)
                 for line in reader:
                     date_object = datetime.strptime(line[0], "%Y-%m-%d").date()
-                    print(f"This is the changed date: {date_object}")
+                    print(f"This is the current date: {date_object}")
                     
                     return date_object
 
