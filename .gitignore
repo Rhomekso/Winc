@@ -29,10 +29,10 @@ modules/
 operators/
 print/
 refactoring/
-requests/
 statements/
 test_sample/
 testing/
 variables/
 while/
 Test Black extension VSCode/
+superpy/

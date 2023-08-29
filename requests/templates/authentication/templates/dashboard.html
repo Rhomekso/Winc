@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="dashboard">
+    <h1>{{ greeting }}</h1>
+    <p>{{ extra_content }}</p>
+    
+    <form action="{{ url_for('logout') }}" method="post">
+        <input type="submit" value="Logout">
+    </form>
+</div>
+{% endblock content %}
+

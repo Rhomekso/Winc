@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="login-form">
+    {% if error %}
+    <div class="error-message">
+        Invalid username or password. Please try again.
+    </div>
+    {% endif %}
+
+<form method="post">
+    <label for="username">Username</label>
+    <input id="username" type="text" name="username">
+    <label for="username">Password</label>
+    <input id="password" type="text" name="password">
+    <input type="submit" value="Login">
+</form>
+{% endblock content %}
+
