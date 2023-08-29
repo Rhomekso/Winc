@@ -1,0 +1,38 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+​
+# testing
+/coverage
+​
+# production
+/build
+​
+# misc
+.idea
+.vscode
+​
+Password/
+calculate/
+casting/
+classes/
+comments/
+conditions/
+dictionariesv2/
+errors/
+for/
+functions/
+hello-world/
+lists/
+modules/
+operators/
+print/
+refactoring/
+requests/
+statements/
+test_sample/
+testing/
+variables/
+while/
+Test Black extension VSCode/
