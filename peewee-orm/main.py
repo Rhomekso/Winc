@@ -11,7 +11,7 @@ def cheapest_dish() -> models.Dish:
 
     Query the database to retrieve the cheapest dish available
     """
-    return models.Dish.select().order_by(models.Dish.price_in_cents).first()
+    return models.Dish.select().order_by(models.Dish.price_in_cents).limit(1).first()
 
 
 def vegetarian_dishes() -> List[models.Dish]:
