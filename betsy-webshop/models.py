@@ -59,7 +59,7 @@ def populate_test_database():
         product5 = Product.create(name="Fish Talker", description="Fish Translator", price=35.99, quantity=7, user=user3)
 
         # test Tags
-        tag_names = ["Weapons", "Gadgets", "Accessories, Vehicles"]
+        tag_names = ["Weapons", "Gadgets", "Accessories", "Vehicles"]
         tags = []
         for name in tag_names:
             try:
