@@ -135,4 +135,4 @@ if __name__ == "__main__":
     initialize_database()
     populate_test_database()
     # remove_product(10)
-    # run_tests()
+    run_tests()
